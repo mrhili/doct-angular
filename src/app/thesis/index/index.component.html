@@ -1,0 +1,32 @@
+<section>
+
+    <div class="d-flex justify-content-between">
+      <h4>List thesis</h4>
+      <a routerLink="/thesis/create" class="btn btn-success">Create New Thesis</a>
+    </div>
+
+    <br>
+    
+    <table class="table ">
+      <tr>
+
+        <th>Name</th>
+
+        <th width="220px">Action</th>
+      </tr>
+      <tr *ngFor="let t of thesis">
+
+        <td>{{ t.name }}</td>
+
+        <td>
+
+          <a href="#" [routerLink]="['/thesis/', 'edit', t.id  ]" class="btn btn-primary">Edit</a>
+          
+
+          <button type="button" (click)="deleteThesis(t.id)" class="btn btn-danger">Delete</button>
+
+
+        </td>
+      </tr>
+    </table>
+ </section>
