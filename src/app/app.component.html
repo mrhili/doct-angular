@@ -1,11 +1,14 @@
-<div class="container" style="padding:20px;">
-	<h1>Single page app</h1>
-	<p style="text-align:center;">
-		<a href="/thesis/index">Thesis</a>
-	</p>
-	<hr>
-  <main>
-  <router-outlet></router-outlet>
-  </main>
-  
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div class="app-container" [ngClass]="{ 'bg-light': user }">
+    <alert></alert>
+    <router-outlet></router-outlet>
 </div>

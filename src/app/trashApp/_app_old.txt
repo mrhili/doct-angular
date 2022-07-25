@@ -1,0 +1,12 @@
+
+<div class="container" style="padding:20px;">
+	<h1>Single page app</h1>
+	<p style="text-align:center;">
+		<a href="/thesis/index">Thesis</a>
+	</p>
+	<hr>
+  <main>
+  <router-outlet></router-outlet>
+  </main>
+  
+</div>

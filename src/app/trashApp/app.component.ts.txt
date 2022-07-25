@@ -1,0 +1,161 @@
+
+import { Component } from '@angular/core';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
+
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  title = 'doctorat';
+
+  private apiURL = "http://localhost:8000/api/";
+
+  //Forms
+  successdata:any;
+  registerForm: FormGroup;
+  submitted = false;
+
+  //formlogin
+  loginForm: FormGroup;
+  loginsubmitted = false;
+
+  constructor(private http: HttpClient, private formBuilder: FormBuilder){
+
+
+    //Register form validations
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      name: ['', [Validators.required]]
+      });
+    
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+      });
+
+
+  }
+
+
+  //Register form actions
+  get f() { return this.registerForm.controls; }
+  get fl() { return this.loginForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+    //True if all the fields are filled
+    if(this.submitted)
+    {
+      
+    // Initialize Params Object
+    var myFormData = new FormData();
+    
+    // Begin assigning parameters
+    
+    myFormData.append('name', this.registerForm.value.name);
+    myFormData.append('email', this.registerForm.value.email);
+    myFormData.append('password', this.registerForm.value.password);
+    //.subscribe((res: Response)
+    return this.http.post(this.apiURL+'register', myFormData).subscribe((res: any) => {
+        this.successdata = res;
+        
+        if(this.successdata['status'] == "success")
+        {
+          //sweetalert message popup
+
+        window.alert(this.successdata['data']['name']+" has been registered successfully");
+        }
+        
+    });
+    }else{
+      return null;
+    }//I just added to correct a bug
+    
+  }
+
+  onLoginSubmit() {
+    this.loginsubmitted = true;
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+        return;
+    }
+    //True if all the fields are filled
+    if(this.loginsubmitted)
+    {
+      
+      // Initialize Params Object
+    var myFormData = new FormData();
+    
+    // Begin assigning parameters
+    
+   
+    //headers.append('Access-Control-Allow-Origin', '*');
+    
+   
+    myFormData.append('email', this.loginForm.value.email);
+    myFormData.append('password', this.loginForm.value.password);
+    return this.http.post(this.apiURL+'login', myFormData).subscribe((res: any) => {
+        this.successdata = res;
+        
+        if(this.successdata['status'] == "success")
+        {
+          window.alert(this.successdata['data']['name']+" has been Login successfully");
+          
+        }
+        if(this.successdata['status'] == "error")
+        {
+          window.alert("Login details are not coreect.");
+
+        }
+      
+        
+    });
+    }else{
+      return null;
+    }//I just added to correct a bug
+  }
+
+
+
+  ngOnInit(){
+  //Register form validations
+    this.registerForm = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    name: ['', [Validators.required]]
+    });
+
+    //Login form validations
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+      });
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

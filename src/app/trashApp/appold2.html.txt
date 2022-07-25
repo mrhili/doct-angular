@@ -1,0 +1,90 @@
+
+
+
+
+<div class="container" style="padding:20px;">
+	
+	<!--Forms-->
+<div class="container">
+	<h1 class="mt-5 mb-5 text-center" style=" background: #fa4444; color: #fff; padding: 10px 0; ">Register</h1>
+	<div style="padding: 10px;border: 2px solid #eeeeee;">
+		<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label>Name</label>
+						<input type="text" formControlName="name" class="form-control" />
+						<div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+							<div *ngIf="f['name'].errors['required']">Name is required</div>
+						</div>
+					</div>
+				</div> 
+				<div class="col-sm-6">
+				<div class="form-group">
+				<label>Email</label>
+				<input type="text" formControlName="email" class="form-control"/>
+				<div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+				<div *ngIf="f['email'].errors['required']">Email is required</div>
+				<div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+				</div>
+				</div>
+				</div>
+				<div class="col-sm-6">
+				<div class="form-group">
+				<label>Password</label>
+				<!--[ngClass]="{ 'is-invalid': submitted && f.password.errors }"-->
+				<input type="password" formControlName="password" class="form-control"/>
+				<div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+				<div *ngIf="f['password'].errors['required']">Password is required</div>
+				<div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+				</div>
+				</div>
+				</div>
+
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</div>
+	
+<div class="container">
+	<h1 class="mt-5 mb-5 text-center" style=" background: #fa4444; color: #fff; padding: 10px 0; ">Login</h1>
+	<div style="padding: 10px;border: 2px solid #eeeeee;">
+	  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+		<div class="form-group">
+			<label>Email</label>
+			<input type="text" formControlName="email" class="form-control" />
+			<div *ngIf="loginsubmitted && fl['email'].errors" class="invalid-feedback">
+				<div *ngIf="fl['email'].errors['required']">Email is required</div>
+				<div *ngIf="fl['email'].errors['email']">Email must be a valid email address</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Password</label>
+			<input type="password" formControlName="password" class="form-control" />
+			<div *ngIf="loginsubmitted && fl['password'].errors" class="invalid-feedback">
+				<div *ngIf="fl['password'].errors['required']">Password is required</div>
+			   
+			</div>
+		  </div>
+	  <div class="form-group form-check">
+		<label class="form-check-label">
+		  <input class="form-check-input" type="checkbox" name="remember"> Remember me
+		</label>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	</div>
+  </div>
+	
+	<h1>Single page app</h1>
+	<p style="text-align:center;">
+		<a href="/thesis/index">Thesis</a>
+	</p>
+	<hr>
+
+  <main>
+  <router-outlet></router-outlet>
+  </main>
+  
+</div>
